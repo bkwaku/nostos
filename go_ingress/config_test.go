@@ -49,11 +49,9 @@ func TestGetEnv(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Setup: set or unset env variable
 			if tt.setEnv {
 				os.Setenv(tt.key, tt.envValue)
-				defer os.Unsetenv(tt.key) // cleanup
-			}
+				defer os.Unsetenv(tt.key)
 
 			got := getEnv(tt.key, tt.defaultVal)
 
