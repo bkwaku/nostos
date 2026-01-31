@@ -52,7 +52,7 @@ func TestGetEnv(t *testing.T) {
 			if tt.setEnv {
 				os.Setenv(tt.key, tt.envValue)
 				defer os.Unsetenv(tt.key)
-
+			}
 			got := getEnv(tt.key, tt.defaultVal)
 
 			if got != tt.want {
