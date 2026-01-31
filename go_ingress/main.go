@@ -8,7 +8,7 @@ import (
 
 func main() {
 	config := LoadConfig()
-	httpServer := initilizeServer(config)
+	httpServer := injectServer(config)
 
 	// Start the server
 	fmt.Printf("[ingress] listening on %s\n", config.ServerAddr)
