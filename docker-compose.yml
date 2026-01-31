@@ -1,0 +1,4 @@
+  ingress:
+    build: ./go_ingress
+    ports:
+      - "8080:8080"
