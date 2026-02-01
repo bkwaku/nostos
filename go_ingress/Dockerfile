@@ -16,7 +16,7 @@ RUN CGO_ENABLED=0 go build -o ingress .
 
 FROM alpine:3.18
 WORKDIR /app
-COPY --from=builder /app/ingress .
+COPY --from=build /app/ingress .
 RUN adduser -D -u 10001 ingressuser && \
     chown -R ingressuser:ingressuser /app
 USER ingressuser

@@ -5,6 +5,8 @@ run tests `docker-compose run --rm test`
 
 run `docker-compose build ingress` to build image
 
+you could run `docker-compose up ingress` to just start the service, it might take a while since we attempt to create the Kafka topics before starting ingress
+
 
 TODO:
 1. Rate Limiting
