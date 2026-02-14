@@ -36,7 +36,7 @@ nostos/
 
 ### Prerequisites
 - Docker and Docker Compose installed
-- Go 1.x+ (for local development)
+- Go 1.25.3+ (for local development)
 
 ### Running the Service
 
