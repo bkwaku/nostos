@@ -6,7 +6,7 @@ Nostos is a fast adaptive flow service designed to ingest high-velocity event st
 
 Nostos acts as an ingress layer between your clients and backend services:
 
-1. **Request Ingestion**: Accepts incoming POST requests at the `/ingress` endpoint
+1. **Request Ingestion**: Accepts incoming POST requests at the `/ingest` endpoint
 2. **Event Processing**: Validates and processes the incoming data
 3. **Stream Publishing**: Forwards events to a Kafka topic for reliable, asynchronous processing
 4. **Rate Limiting**: (Coming soon) Applies dynamic rate limiting to protect downstream services
@@ -53,7 +53,7 @@ nostos/
 
 3. **Make a request**:
    ```bash
-   curl -X POST http://localhost:8080/ingress \
+   curl -X POST http://localhost:8080/ingest \
      -H "Content-Type: application/json" \
      -d '{"your": "data"}'
    ```

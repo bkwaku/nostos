@@ -34,7 +34,7 @@ func NewServer(producer Producer) *Server {
 func (s *Server) RegisterRoutes(mux *http.ServeMux) {
 	handler := http.HandlerFunc(s.handleIngest)
 	// a small middleware to log requests
-	mux.Handle("/ingress", s.loggingMiddleware(handler))
+	mux.Handle("/ingest", s.loggingMiddleware(handler))
 }
 
 func (s *Server) handleIngest(w http.ResponseWriter, r *http.Request) {
