@@ -87,9 +87,3 @@ We use [Fizzy](https://app.fizzy.do/6155831/public/boards/Jp19hqsTDqNbXYUFak75XF
    - Any relevant tests
 5. **Wait for review** and address feedback
 
-## Roadmap
-
-- [ ] Rate Limiting implementation
-- [ ] Authentication and Authorization
-- [ ] Metrics and monitoring
-- [ ] Additional routing capabilities
