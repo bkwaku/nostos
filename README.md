@@ -1,23 +1,95 @@
-# nostos
-Nostos is fast adaptive flow service designed to ingest high-velocity event streams and apply dynamic rate limiting to protect your APIs, essentially a fast API gateway for heavy write requests
+# Nostos
 
-run tests `docker-compose run --rm test`
+Nostos is a fast adaptive flow service designed to ingest high-velocity event streams and apply dynamic rate limiting to protect your APIs. It functions as a high-performance API gateway specifically optimized for heavy write requests.
 
-run `docker-compose build ingress` to build image
+## How It Works
 
-you could run `docker-compose up ingress` to just start the service, it might take a while since we attempt to create the Kafka topics before starting ingress, see `kafka-topic.sh`
+Nostos acts as an ingress layer between your clients and backend services:
 
-To view the Kafka stream of events, use: ```docker-compose exec kafka kafka-console-consumer \
+1. **Request Ingestion**: Accepts incoming POST requests at the `/ingress` endpoint
+2. **Event Processing**: Validates and processes the incoming data
+3. **Stream Publishing**: Forwards events to a Kafka topic for reliable, asynchronous processing
+4. **Rate Limiting**: (Coming soon) Applies dynamic rate limiting to protect downstream services
+5. **Authentication**: (Coming soon) Validates requests before processing
+
+This architecture decouples write operations from your core services, providing resilience, scalability, and the ability to handle traffic spikes without overwhelming backend systems.
+
+## Project Structure
+
+```
+nostos/
+├── docker-compose.yml       # Docker services configuration
+├── kafka-topics.sh          # Kafka topic initialization script
+├── go_ingress/              # Main ingress service
+│   ├── main.go              # Application entry point
+│   ├── config.go            # Configuration management
+│   ├── server_injector.go   # Dependency injection
+│   ├── kafka/               # Kafka producer implementation
+│   │   └── producer.go
+│   └── server/              # HTTP server and handlers
+│       ├── server.go        # Server implementation
+│       ├── types.go         # Request/response types
+│       └── response_writer.go
+```
+
+## Getting Started Locally
+
+### Prerequisites
+- Docker and Docker Compose installed
+- Go 1.x+ (for local development)
+
+### Running the Service
+
+1. **Build the ingress service**:
+   ```bash
+   docker-compose build ingress
+   ```
+
+2. **Start the service**:
+   ```bash
+   docker-compose up ingress
+   ```
+   Note: The startup process includes Kafka topic creation, which may take a moment.
+
+3. **Make a request**:
+   ```bash
+   curl -X POST http://localhost:8080/ingress \
+     -H "Content-Type: application/json" \
+     -d '{"your": "data"}'
+   ```
+
+### Development
+
+**Run tests**:
+```bash
+docker-compose run --rm test
+```
+
+**Monitor Kafka events**:
+```bash
+docker-compose exec kafka kafka-console-consumer \
   --bootstrap-server kafka:9092 \
-  --topic ingress-topic``` 
+  --topic ingress-topic
+```
 
+## How to Contribute
 
-### How to use this:
-1. Run `docker-compose up ingress` to start app(Make sure you build the app first)
-1. Make a POST request to `/ingress`. Only supports POST; the idea is to support writes
-2. The server will receive your request and send it to Kafka
+We use [Fizzy](https://app.fizzy.do/6155831/public/boards/Jp19hqsTDqNbXYUFak75XFEZ) to manage our project board.
 
+### Contribution Workflow
 
-### TODO:
-1. Rate Limiting
-2. Authentication and Authorisation
+1. **Pick a ticket** from the [project board](https://app.fizzy.do/6155831/public/boards/Jp19hqsTDqNbXYUFak75XFEZ)
+2. **Move it to "In Progress"** on the board
+3. **Create a branch** and implement your changes
+4. **Open a Pull Request** with:
+   - Clear description of changes
+   - Reference to the ticket number
+   - Any relevant tests
+5. **Wait for review** and address feedback
+
+## Roadmap
+
+- [ ] Rate Limiting implementation
+- [ ] Authentication and Authorization
+- [ ] Metrics and monitoring
+- [ ] Additional routing capabilities
